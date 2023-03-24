@@ -18,8 +18,8 @@ import java.util.*;
 
 public class Graph implements Serializable{
 	
-	// 
-    private Map<User, Set<User>> adjacencyList;
+	// Maps user to hashset of other users
+    private Map<User, HashSet<User>> adjacencyList;
 
     /**
      * Default constructor of graph initialising empty graph structure
@@ -38,7 +38,7 @@ public class Graph implements Serializable{
     					fis = new FileInputStream("mastodont.txt");
     					ois = new ObjectInputStream(fis);
     					// read in serialized graph from file on disk
-    					adjacencyList = (Map<User, Set<User>>) ois.readObject();
+    					adjacencyList = (Map<User, HashSet<User>>) ois.readObject();
     				} 
     				catch (IOException e) 
     				{
