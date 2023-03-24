@@ -119,10 +119,6 @@ public class Graph implements Serializable{
     public HashSet<User> getUsers()
     {
     	HashSet<User> set = new HashSet<>(adjacencyList.keySet());
-    	if(set.equals(null))
-    	{
-    		set = new HashSet<>();
-    	}
     	return set;
     }
     
@@ -159,17 +155,12 @@ public class Graph implements Serializable{
 		{
 			return vertexRemoved;
 		}
-    
 		Set<User> adjacentVertices = adjacencyList.get(u);
-    
-		//If user being removed has no friends then no need
-		if(adjacentVertices!=null)
+		for (User adjacentVertex : adjacentVertices) 
 		{
-			for (User adjacentVertex : adjacentVertices) 
-			{
-				adjacencyList.get(adjacentVertex).remove(u);
-			}
+			adjacencyList.get(adjacentVertex).remove(u);
 		}
+
 		//remove user from graph
 		adjacencyList.remove(u);
 		return vertexRemoved=true;
