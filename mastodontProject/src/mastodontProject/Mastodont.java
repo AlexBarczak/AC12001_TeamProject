@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -14,9 +15,7 @@ public class Mastodont extends JFrame{
 	SidebarDisplay sidebar;
 	MainDisplay main;
 	
-	LinkedList<User> userList;
-	//insert graph here to map connections between users
-	
+	private Graph g;
 	private User currentUser;
 	
 	public Mastodont(){
@@ -61,11 +60,11 @@ public class Mastodont extends JFrame{
 		
 		currentUser = null;
 		
-		loadUsersAndPostsFromFile();
+		g = new Graph();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {
-	           saveUsersAndPostsToFile();
+	           g.saveGraph();
 	        }
 	    }, "Shutdown-thread"));
 	}
@@ -78,21 +77,22 @@ public class Mastodont extends JFrame{
 	}
 	
  	public User searchForUser(String username) {
+ 		
+ 		HashSet<User> userList = g.getUsers();
  		Iterator<User> it = userList.iterator(); 
  		
  		while(it.hasNext()) {
  			User user = it.next();
- 			if(user.GetUsername().equals(username)) {
+ 			if(user.getUsername().equals(username)) {
  				return user;
  			}
 		}
 		return null;
 	}
 
- 	// use this method to not only add the user to the user list but also add it to the graph keeping track of connections
+ 	
  	public void registerUser(User user) {
- 		userList.add(user);
- 		//add the method for adding the user to the graph here
+ 		g.addVertex(user);
  	}
  	
 	public static void main(String[] args) {
@@ -103,37 +103,4 @@ public class Mastodont extends JFrame{
 		mastodont.setSize(800,600);
 		mastodont.setVisible(true);
 	}
-	
-	public void saveUsersAndPostsToFile() {
-		System.out.println(userList);
-		try {
-			FileOutputStream fileOutputStream
-		      = new FileOutputStream("users.txt");
-		    ObjectOutputStream objectOutputStream 
-		      = new ObjectOutputStream(fileOutputStream);
-		    objectOutputStream.writeObject(userList);
-		    objectOutputStream.flush();
-		    objectOutputStream.close();
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void loadUsersAndPostsFromFile() {
-		try {
-			FileInputStream fileInputStream
-		      = new FileInputStream("users.txt");
-		    ObjectInputStream objectInputStream
-		      = new ObjectInputStream(fileInputStream);
-		    userList = (LinkedList<User>) objectInputStream.readObject();
-		    objectInputStream.close(); 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-		if (userList == null) {
-			userList = new LinkedList<User>();
-		}
-	}
-	
 }
