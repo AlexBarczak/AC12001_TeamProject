@@ -18,12 +18,13 @@ public class Tester {
         frame.setSize(500, 700);
         frame.setLayout(new GridBagLayout());
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             // Instantiate each post
-            Post post = new Post("Username", "woueifbjnvdoifnjkieufbcskjdnvwkjesdbvsdhckjsdcnskasbckjsvdbvskjdhcbksdm,b cksjdbvv");
+            Post post = new Post("Username", "post titleeeee", "woueifbjnvdo ifnjkieufbcskjdnvw kjesdbvsdhckj sdcnskasbckj svdbvskjdhcbks dm,b cksjdbvv", 10);
 
             // Create and add each post
             JPanel postExample1 = post.createPost();
+            c.anchor = GridBagConstraints.NORTH;
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = GridBagConstraints.HORIZONTAL;
             c.weighty = GridBagConstraints.RELATIVE;
