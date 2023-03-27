@@ -32,7 +32,8 @@ public class HeaderDisplay extends JPanel{
 		add(Box.createRigidArea(new Dimension(5,0)));
 		add(new JLabel("mastodont"));
 		add(Box.createHorizontalGlue());
-		add(new JLabel(user.GetUsername()));
+		add(new JLabel(user.getUsername()));
+
 		add(Box.createRigidArea(new Dimension(5,0)));
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("../neia.jpg"), "is this missing?");

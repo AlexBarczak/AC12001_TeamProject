@@ -25,7 +25,10 @@ public class MainDisplay extends JPanel{
 		
 		displayGuestPage();		
 	}
-	
+
+	public MainDisplay() {
+		setLayout(new GridBagLayout());
+	}
 	public void displayGuestPage() {
 		removeAll();
 		
@@ -199,11 +202,20 @@ public class MainDisplay extends JPanel{
 	
 	public void displayFollowedUserPage() {
 		removeAll();
+		
+		validate();
 		repaint();
 	}
 	
 	public void displaySearchPage() {
-		removeAll();
+		removeAll();		
+		
+		JPanel searchPanel = new UserSearchArea(program);
+		
+		add(searchPanel);
+		
+		validate();
+		repaint();
 	}
 	
 	public void displayCurrentUserPage(User user) {
@@ -216,5 +228,6 @@ public class MainDisplay extends JPanel{
 		
 		validate();
 		repaint();
-	}
+	}	
+
 }

@@ -11,9 +11,9 @@ import java.util.LinkedList;
 
 public class Mastodont extends JFrame{
 	
-	HeaderDisplay header;
-	SidebarDisplay sidebar;
-	MainDisplay main;
+	public HeaderDisplay header;
+	public SidebarDisplay sidebar;
+	public MainDisplay main;
 	
 	private Graph g;
 	private User currentUser;
@@ -43,7 +43,8 @@ public class Mastodont extends JFrame{
 		gbc.weighty = 0;
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridwidth = 1;
-		sidebar = new SidebarDisplay();
+    
+		sidebar = new SidebarDisplay(this);
 		add(sidebar, gbc);
 		
 		//main area
@@ -69,6 +70,14 @@ public class Mastodont extends JFrame{
 	    }, "Shutdown-thread"));
 	}
 	
+	public Graph getGraph() {
+		return g;
+	}
+	
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
 	public void logIn(User user) {
 		this.currentUser = user;
 		header.displayUserAppearance(user);
@@ -89,10 +98,19 @@ public class Mastodont extends JFrame{
 		}
 		return null;
 	}
+ 	
+ 	public void validateAndRepaint() {
+ 		validate();
+ 		repaint();
+ 	}
 
  	
  	public void registerUser(User user) {
  		g.addVertex(user);
+ 	}
+ 	
+ 	public void displaySearchFunction() {
+ 		main.displaySearchPage();
  	}
  	
 	public static void main(String[] args) {

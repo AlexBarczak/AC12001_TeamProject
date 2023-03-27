@@ -1,19 +1,23 @@
 package mastodontProject;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Iterator;
 
 import javax.swing.*;
 
 public class SidebarDisplay extends JPanel{
 	
+	Mastodont program;
 	JPanel friendsPanel;
 	JScrollPane scrollPane;
 	
-	public SidebarDisplay() {
+	public SidebarDisplay(Mastodont program) {
+		this.program = program;
 		setLayout(new BorderLayout());
 		
 		friendsPanel = new JPanel();
 		scrollPane = new JScrollPane(friendsPanel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		setPreferredSize(new Dimension(150, Integer.MAX_VALUE));
 		
@@ -28,14 +32,23 @@ public class SidebarDisplay extends JPanel{
 	public void displayFollowed(User user) {
 		friendsPanel.removeAll();
 		
-		friendsPanel.add(new JLabel("friends:"));
+		JButton searchButton = new JButton("Look for people");
+		friendsPanel.add(searchButton);
 		
-		friendsPanel.add(new JButton("Obscenely long name for testing"));
-		friendsPanel.add(new JButton("Aleksander Barczak"));
-		friendsPanel.add(new JButton("Flynn Henderson"));
-		friendsPanel.add(new JButton("Lucy Thompson"));
-		friendsPanel.add(new JButton("Emma Martin"));
-		friendsPanel.add(new JButton("Martyn Bett"));
+		searchButton.addActionListener(e -> {
+			program.displaySearchFunction();
+		});
+		
+		friendsPanel.add(new JLabel("friends:"));	
+		
+		Iterator<User> it = program.getGraph().getAdjVertices(program.getCurrentUser()).iterator();
+		
+		while(it.hasNext()) {
+			User nextUser = it.next();
+			
+			JButton nextUserButton = new JButton(nextUser.getUsername());
+			friendsPanel.add(nextUserButton);
+		}
 		
 		friendsPanel.validate();
 		friendsPanel.repaint();

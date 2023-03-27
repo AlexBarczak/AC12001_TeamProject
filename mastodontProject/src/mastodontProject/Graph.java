@@ -64,7 +64,7 @@ public class Graph implements Serializable{
     			}
     			else {
     				//create empty graph if file doesn't exist to load from
-    	            adjacencyList = new HashMap<>();
+    	            adjacencyList = new HashMap<User, HashSet<User>>();
     	        }
     }
 
@@ -85,7 +85,7 @@ public class Graph implements Serializable{
      * @param source User edge is being added to/from
      * @param destination Other User edge is being added to/from
      * 
-     * @return True if edge is added between specified verices, false otherwise
+     * @return True if edge is added between specified vertices, false otherwise
      */
     public boolean addEdge(User source, User destination) 
     {
@@ -100,7 +100,7 @@ public class Graph implements Serializable{
         {
         	return edgeAdded;
         }
-        // Making sure the users arent already friends
+        // Making sure the users aren't already friends
         else if(!adjacencyList.get(source).contains(destination))
         {
         	adjacencyList.get(source).add(destination);
@@ -125,7 +125,7 @@ public class Graph implements Serializable{
     /**
      * Get a set of all vertices adjacent to a selected vertex
      * 
-     * @param u User whos adjacent vertices are wanted
+     * @param u User who's adjacent vertices are wanted
      * 
      * @return All vertices adjacent to specified vertex, empty if no connections
      */
@@ -291,4 +291,3 @@ public class Graph implements Serializable{
         }
 	}
 }
-
