@@ -10,26 +10,23 @@ import java.awt.*;
 public class Tester {
     public static void main(String[] args) {
         // Initialise objects and frame
-        Tester t = new Tester();
+        //Tester t = new Tester();
         JFrame frame = new JFrame();
-        GridBagLayout gridBag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 700);
-        frame.setLayout(gridBag);
+        frame.setLayout(new GridBagLayout());
 
-        c.weighty = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = GridBagConstraints.HORIZONTAL;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridx = 0;
-
-        // Create 10 temporary text posts
         for (int i = 0; i < 10; i++) {
-            Post post = new Post("User: " + i, "Post text: " + i);
-            post.createPost(frame);
-            //t.createPost(post.getUsername(), post.getText(), gridBag, c, frame);
+            Post post = new Post("Username", "woueifbjnvdoifnjkv");
+            JPanel postExample1 = post.createPost();
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.weightx = GridBagConstraints.HORIZONTAL;
+            c.weighty = GridBagConstraints.RELATIVE;
+            c.gridwidth = 3;
+            c.gridx = 0;
+            frame.add(postExample1, c);
         }
 
         // Show frame at the end

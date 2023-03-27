@@ -8,55 +8,48 @@ import java.awt.*;
 public class Post {
     private String username;
     private String text;
-    private GridBagConstraints mainConstraints;
-    private GridBagConstraints textConstraints;
-    private GridBagLayout mainGridBag;
-    private GridBagLayout textGridBag;
+    private JPanel panel;
+    private GridBagConstraints c;
 
     public Post(String Username, String postText) {
         this.username = Username;
         this.text = postText;
-
-        mainConstraints = new GridBagConstraints();
-        //textConstraints = new GridBagConstraints();
-        mainGridBag = new GridBagLayout();
-        //textGridBag = new GridBagLayout();
-
-        mainConstraints.weighty = 1;
-        mainConstraints.fill = GridBagConstraints.HORIZONTAL;
-        mainConstraints.weightx = GridBagConstraints.HORIZONTAL;
-        mainConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        mainConstraints.gridx = 0;
-
-        //textConstraints.weighty = 0;
-        //textConstraints.fill = GridBagConstraints.HORIZONTAL;
-        //textConstraints.weightx = GridBagConstraints.HORIZONTAL;
-        //textConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        //textConstraints.gridx = 0;
     }
 
+    public JPanel createPost() {
+        c = new GridBagConstraints();
+        panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.ORANGE); // panel coloourr
+
+        JTextField usernameField = new JTextField(this.username);
+        usernameField.setEditable(false);
+        usernameField.setBackground(Color.BLUE); // so i can see what area is being used by the UsernameField
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 0;
+        panel.add(usernameField, c);
+        
+        JTextField textField = new JTextField(this.text);
+        textField.setEditable(false);
+        textField.setBackground(Color.green); // so i can see what area is being used by the textField
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = GridBagConstraints.HORIZONTAL;
+        c.weighty = 1;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(textField, c);
+
+        return panel;
+    }
+    
     public String getText() {
         return this.text;
     }
 
     public String getUsername() {
         return this.username;
-    }
-
-    public void createPost(JFrame frame) {
-        JTextField usernameField = new JTextField(this.username);
-        //JTextField textField = new JTextField(this.text);
-
-        usernameField.setEditable(false);
-        usernameField.setBackground(Color.BLUE); // so i can see what area is being used by the UsernameField
-        //textField.setEditable(false);
-        //textField.setBackground(Color.green); // so i can see what area is being used by the textField
-
-        //usernameField.add(textField);
-        //textGridBag.setConstraints(textField, this.textConstraints);
-        mainGridBag.setConstraints(usernameField, this.mainConstraints);
-
-
-        frame.add(usernameField);
     }
 }
