@@ -12,11 +12,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
-	public String GetUsername() {
+	public String getUsername() {
 		return this.username;
 	}
 	
-	public Post[] GetUserPosts() {
+	public Post[] getUserPosts() {
 		return this.userPosts;
 	}
 	
