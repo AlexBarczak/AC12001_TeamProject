@@ -64,7 +64,7 @@ public class Graph implements Serializable{
     			}
     			else {
     				//create empty graph if file doesn't exist to load from
-    	            adjacencyList = new HashMap<>();
+    	            adjacencyList = new HashMap<User, HashSet<User>>();
     	        }
     }
 
