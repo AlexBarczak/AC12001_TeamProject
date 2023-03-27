@@ -10,6 +10,7 @@ public class Post {
     private String text;
     private JPanel panel;
     private GridBagConstraints c;
+    private Color colour = Color.lightGray; // Can change if you want
 
     public Post(String Username, String postText) {
         this.username = Username;
@@ -19,27 +20,31 @@ public class Post {
     public JPanel createPost() {
         c = new GridBagConstraints();
         panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.ORANGE); // panel coloourr
+        panel.setBackground(Color.lightGray); // panel coloourr
 
-        JTextField usernameField = new JTextField(this.username);
+        JTextArea usernameField = new JTextArea(this.username);
         usernameField.setEditable(false);
-        usernameField.setBackground(Color.BLUE); // so i can see what area is being used by the UsernameField
+        usernameField.setBackground(colour); 
+        usernameField.setLineWrap(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 0;
+        c.insets = new Insets(0, 0, 1, 0);
         panel.add(usernameField, c);
         
-        JTextField textField = new JTextField(this.text);
+        JTextArea textField = new JTextArea(this.text);
         textField.setEditable(false);
-        textField.setBackground(Color.green); // so i can see what area is being used by the textField
+        textField.setBackground(colour);
+        textField.setLineWrap(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = GridBagConstraints.HORIZONTAL;
         c.weighty = 1;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
+        c.insets = new Insets(1, 0, 0, 0);
         panel.add(textField, c);
 
         return panel;
