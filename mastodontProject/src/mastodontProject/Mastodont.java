@@ -43,6 +43,7 @@ public class Mastodont extends JFrame{
 		gbc.weighty = 0;
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridwidth = 1;
+    
 		sidebar = new SidebarDisplay(this);
 		add(sidebar, gbc);
 		
@@ -76,7 +77,7 @@ public class Mastodont extends JFrame{
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	
+
 	public void logIn(User user) {
 		this.currentUser = user;
 		header.displayUserAppearance(user);

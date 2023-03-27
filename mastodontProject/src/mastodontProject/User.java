@@ -14,6 +14,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
+
 	public String getWorkplace() {
 		return workplace;
 	}
@@ -29,7 +30,7 @@ public class User implements Serializable{
 	public void setHometown(String hometown) {
 		this.hometown = hometown;
 	}
-	
+
 	public String getUsername() {
 		return this.username;
 	}

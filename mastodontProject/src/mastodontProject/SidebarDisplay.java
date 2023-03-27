@@ -13,7 +13,6 @@ public class SidebarDisplay extends JPanel{
 	
 	public SidebarDisplay(Mastodont program) {
 		this.program = program;
-		
 		setLayout(new BorderLayout());
 		
 		friendsPanel = new JPanel();

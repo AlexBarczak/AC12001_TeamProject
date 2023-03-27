@@ -25,11 +25,10 @@ public class MainDisplay extends JPanel{
 		
 		displayGuestPage();		
 	}
-	
+
 	public MainDisplay() {
 		setLayout(new GridBagLayout());
 	}
-
 	public void displayGuestPage() {
 		removeAll();
 		
@@ -227,9 +226,8 @@ public class MainDisplay extends JPanel{
 		// with all the posts
 		// for the area to create a post add a text area for the user and a button to post
 		
-		
-		
 		validate();
 		repaint();
 	}	
+
 }
