@@ -75,7 +75,7 @@ public class Post implements Serializable{
         JButton likesButton = new JButton("<3 " + this.likes);
         likesButton.addActionListener(e -> {
             this.addLike();
-            likesButton.setText("<3 " + this.likes); // Will need to update the likes in the save file
+            likesButton.setText("<3 " + this.likes);
         });
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.fill = GridBagConstraints.NONE;

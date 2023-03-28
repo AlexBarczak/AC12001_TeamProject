@@ -1,4 +1,5 @@
 package mastodontProject;
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Arrays;
@@ -32,6 +33,8 @@ public class MainDisplay extends JPanel{
 	public void displayGuestPage() {
 		removeAll();
 		
+		setLayout(new GridBagLayout());
+		
 		//ask the user to choose whether to log in or sign up
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -60,6 +63,8 @@ public class MainDisplay extends JPanel{
 	
 	public void displayLoginPage() {
 		removeAll();
+		
+		setLayout(new GridBagLayout());
 		
 		//need the user name, user password and buttons for logging in or changing choice to signing up
 		JTextField userField = new JTextField(24);
@@ -132,6 +137,8 @@ public class MainDisplay extends JPanel{
 	
 	public void displaySignUpPage() {
 		removeAll();
+		
+		setLayout(new GridBagLayout());
 		
 		JTextField userField = new JTextField(24);
 		JPasswordField passwordField = new JPasswordField(24);
@@ -210,6 +217,8 @@ public class MainDisplay extends JPanel{
 	public void displaySearchPage() {
 		removeAll();		
 		
+		setLayout(new GridBagLayout());
+		
 		JPanel searchPanel = new UserSearchArea(program);
 		
 		add(searchPanel);
@@ -221,12 +230,65 @@ public class MainDisplay extends JPanel{
 	public void displayCurrentUserPage() {
 		removeAll();
 		
+		setLayout(new BorderLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
 		// create area for posts and area for writing a new post
 		// in the area for posts create a JPanel and populate the area
 		// with all the posts
 		// for the area to create a post add a text area for the user and a button to post
 		
+		JPanel scrollablePanel = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(scrollablePanel); 
 		
+		JPanel detailsPanel = new JPanel();
+		JPanel friendsPanel = new JPanel();
+		JPanel postsPanel = new JPanel();		 
+		
+		scrollablePanel.add(detailsPanel);
+		scrollablePanel.add(friendsPanel);
+		scrollablePanel.add(postsPanel);
+		
+		User user = program.getCurrentUser();
+		
+		detailsPanel.setLayout(new GridBagLayout());
+		
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 10;
+		detailsPanel.add(new JLabel(user.getUsername() + "'s account:"), gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		JLabel hometownLabel = new JLabel("Hometown: " + user.getHometown());
+		detailsPanel.add(hometownLabel, gbc);
+		gbc.gridx = 1;
+		JButton changeHometownButton = new JButton("change hometown");
+		detailsPanel.add(changeHometownButton, gbc);
+		
+		changeHometownButton.addActionListener(e -> {
+			String newHometown = JOptionPane.showInputDialog(this, "type in new hometown: ");
+			hometownLabel.setText("Hometown: " + newHometown);
+			user.setHometown(newHometown);
+		});
+		
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		JLabel workplaceLabel = new  JLabel("Workplace: " + user.getWorkplace());
+		detailsPanel.add(workplaceLabel, gbc);
+		gbc.gridx = 1;
+		JButton changeWorkplaceButton = new JButton("change workplace");
+		detailsPanel.add(changeWorkplaceButton, gbc);
+		
+		changeWorkplaceButton.addActionListener(e -> {
+			String newWorplace = JOptionPane.showInputDialog(this, "type in new hometown: ");
+			workplaceLabel.setText("Workplace: " + newWorplace);
+			user.setWorkplace(newWorplace);
+		});
+		
+		add(scrollPane, BorderLayout.CENTER);
 		
 		validate();
 		repaint();
