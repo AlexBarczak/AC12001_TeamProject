@@ -40,17 +40,20 @@ public class Post implements Serializable{
         title.setEditable(false);
         title.setBackground(colour);
         title.setWrapStyleWord(true);
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.WEST;
+        c.weightx = 0;
         c.gridx = 0;
         c.gridy = 0;
+        c.ipadx = 60;
         panel.add(title, c);
 
         // Username
         JTextArea username = new JTextArea(this.username);
         username.setEditable(false);
         username.setBackground(colour); 
-        c.fill = GridBagConstraints.REMAINDER;
-        c.weightx = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.EAST;
         c.gridwidth = 3;
         c.gridx = 3;
         c.gridy = 0;
@@ -62,12 +65,13 @@ public class Post implements Serializable{
         content.setEditable(false);
         content.setBackground(colour);
         content.setLineWrap(true);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.BOTH;
         c.weighty = 1;
-        c.gridwidth = 3;
+        c.gridwidth = GridBagConstraints.REMAINDER;
         c.gridx = 0;
         c.gridy = 1;
+        c.ipadx = 0;
         c.insets = new Insets(1, 0, 0, 0);
         panel.add(content, c);
 
@@ -79,7 +83,6 @@ public class Post implements Serializable{
         });
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.fill = GridBagConstraints.NONE;
-        c.weightx = 0;
         c.weighty = 1;
         c.gridy = 2;
         panel.add(likesButton, c);

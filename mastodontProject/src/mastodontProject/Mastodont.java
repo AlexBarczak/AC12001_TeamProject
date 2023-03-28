@@ -32,7 +32,7 @@ public class Mastodont extends JFrame{
 		gbc.ipady = 64;
 		gbc.gridheight = 1;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		header = new HeaderDisplay();
+		header = new HeaderDisplay(this);
 		add(header, gbc);
 		
 		//side bar

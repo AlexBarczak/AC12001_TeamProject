@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.*;
 
@@ -241,19 +243,22 @@ public class MainDisplay extends JPanel{
 		
 		JPanel scrollablePanel = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(scrollablePanel); 
+		scrollablePanel.setLayout(new GridBagLayout());
 		
 		JPanel detailsPanel = new JPanel();
-		JPanel friendsPanel = new JPanel();
 		JPanel postsPanel = new JPanel();		 
 		
-		scrollablePanel.add(detailsPanel);
-		scrollablePanel.add(friendsPanel);
-		scrollablePanel.add(postsPanel);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		scrollablePanel.add(detailsPanel, gbc);
+		gbc.gridy = 1;
+		scrollablePanel.add(postsPanel, gbc);
 		
 		User user = program.getCurrentUser();
 		
-		detailsPanel.setLayout(new GridBagLayout());
+		//display basic stuff for user's details
 		
+		detailsPanel.setLayout(new GridBagLayout());
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -287,6 +292,49 @@ public class MainDisplay extends JPanel{
 			workplaceLabel.setText("Workplace: " + newWorplace);
 			user.setWorkplace(newWorplace);
 		});
+		
+		//display the users posts alongside a textarea for making a new post
+		
+		postsPanel.setLayout(new GridBagLayout());
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 60;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		LinkedList<Post> postList = user.getUserPosts();
+		
+		if (postList != null) {
+			Iterator<Post> it = postList.iterator();
+			
+			while(it.hasNext()) {
+				JPanel postPanel = it.next().createPost();
+				postsPanel.add(postPanel, gbc);
+				gbc.gridy += 1;
+			}
+		}
+		
+		
+		JTextField newPostTitle = new JTextField("Enter Post Title", 16);		
+		JTextArea newPostContent = new JTextArea("Enter Post Content", 10, 24);
+		JButton newPostButton = new JButton("Make new Post");
+		
+		gbc.ipadx = 0;
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		postsPanel.add(newPostTitle, gbc);
+		gbc.gridx = 1;
+		postsPanel.add(newPostButton, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy += 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		postsPanel.add(newPostContent, gbc);
+		
+		newPostButton.addActionListener(e -> {
+			user.addPost(new Post(user.getUsername(), newPostTitle.getText(), newPostContent.getText(), 0));
+			displayCurrentUserPage();
+		});
+		
+		
 		
 		add(scrollPane, BorderLayout.CENTER);
 		

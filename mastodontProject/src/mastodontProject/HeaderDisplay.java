@@ -8,7 +8,10 @@ import javax.swing.*;
 
 public class HeaderDisplay extends JPanel{
 	
-	public HeaderDisplay() {
+	private Mastodont program;
+	
+	public HeaderDisplay(Mastodont program) {
+		this.program = program;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setBorder(BorderFactory.createMatteBorder(
                 1, 5, 1, 1, Color.black));
@@ -46,6 +49,10 @@ public class HeaderDisplay extends JPanel{
 		iconButton.setBorder(null);
 		iconButton.setBorderPainted(false);
 		iconButton.setMargin(new Insets(0,0,0,0));
+		
+		iconButton.addActionListener(e -> {
+			program.main.displayCurrentUserPage();
+		});
 		
 		add(iconButton);
 		
