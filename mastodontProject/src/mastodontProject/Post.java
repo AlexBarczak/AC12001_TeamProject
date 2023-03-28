@@ -13,8 +13,6 @@ public class Post implements Serializable{
     private String content;
     private int likes;
     private String title;
-    private JPanel panel;
-    private GridBagConstraints c;
     private Color colour = Color.yellow; // Can change if you want
 
     public Post(String Username, String Title, String postText, int Likes) {
@@ -31,8 +29,8 @@ public class Post implements Serializable{
      * @return JPanel 
      */
     public JPanel createPost() {
-        c = new GridBagConstraints();
-        panel = new JPanel(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(colour);
 
         // Title

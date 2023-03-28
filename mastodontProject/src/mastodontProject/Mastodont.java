@@ -36,10 +36,10 @@ public class Mastodont extends JFrame{
 		add(header, gbc);
 		
 		//side bar
-		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.weightx = 0;
+		gbc.weightx = 0.2;
 		gbc.weighty = 0;
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridwidth = 1;

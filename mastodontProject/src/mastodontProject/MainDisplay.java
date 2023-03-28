@@ -32,6 +32,7 @@ public class MainDisplay extends JPanel{
 	public MainDisplay() {
 		setLayout(new GridBagLayout());
 	}
+	
 	public void displayGuestPage() {
 		removeAll();
 		
@@ -211,6 +212,69 @@ public class MainDisplay extends JPanel{
 	
 	public void displayFollowedUserPage(User user) {
 		removeAll();
+		
+		setLayout(new BorderLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		// create area for posts and area for writing a new post
+		// in the area for posts create a JPanel and populate the area
+		// with all the posts
+		// for the area to create a post add a text area for the user and a button to post
+		
+		JPanel scrollablePanel = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(scrollablePanel); 
+		scrollablePanel.setLayout(new GridBagLayout());
+		
+		JPanel detailsPanel = new JPanel();
+		JPanel postsPanel = new JPanel();		 
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		scrollablePanel.add(detailsPanel, gbc);
+		gbc.gridy = 1;
+		scrollablePanel.add(postsPanel, gbc);
+		
+		//display basic stuff for user's details
+		
+		detailsPanel.setLayout(new GridBagLayout());
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 10;
+		detailsPanel.add(new JLabel(user.getUsername() + "'s account:"), gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		JLabel hometownLabel = new JLabel("Hometown: " + user.getHometown());
+		detailsPanel.add(hometownLabel, gbc);
+		
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		JLabel workplaceLabel = new  JLabel("Workplace: " + user.getWorkplace());
+		detailsPanel.add(workplaceLabel, gbc);
+		
+		//display the users posts alongside a textarea for making a new post
+		
+		postsPanel.setLayout(new GridBagLayout());
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 60;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		LinkedList<Post> postList = user.getUserPosts();
+		
+		if (postList != null) {
+			Iterator<Post> it = postList.iterator();
+			
+			while(it.hasNext()) {
+				JPanel postPanel = it.next().createPost();
+				postsPanel.add(postPanel, gbc);
+				gbc.gridy += 1;
+			}
+		}
+		
+		add(scrollPane, BorderLayout.CENTER);
 		
 		validate();
 		repaint();

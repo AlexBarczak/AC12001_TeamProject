@@ -48,6 +48,10 @@ public class SidebarDisplay extends JPanel{
 			
 			JButton nextUserButton = new JButton(nextUser.getUsername());
 			friendsPanel.add(nextUserButton);
+			
+			nextUserButton.addActionListener(e -> {
+				program.main.displayFollowedUserPage(nextUser);
+			});
 		}
 		
 		friendsPanel.validate();

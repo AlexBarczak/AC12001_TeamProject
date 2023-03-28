@@ -42,11 +42,13 @@ public class Graph implements Serializable{
     				} 
     				catch (IOException e) 
     				{
-    				     System.out.println("Something went wrong :(");
+    					System.out.println("IOException");
+    					System.out.println(e.getMessage());
     				}
     				catch (ClassNotFoundException e)
     				{
-    					 System.out.println("Something went wrong :(");
+    					System.out.println("ClassNotFoundException");
+    					 System.out.println(e.getMessage());
     				}
     				finally {
     					if (ois != null)
@@ -57,7 +59,8 @@ public class Graph implements Serializable{
     		            	}
     		            	catch (IOException e)
     		            	{
-    		                	System.out.println("Sorry, there has been a problem closing the file");
+    		            		System.out.println("IOException");
+    		                	System.out.println(e.getMessage());
     		            	}
     		        	}
     				}
@@ -273,21 +276,25 @@ public class Graph implements Serializable{
         } 
 		catch (IOException e) 
 		{
-			System.out.println("Something went wrong :(");
+			System.out.println("IOException");
+			System.out.println("IOException while saving");
+			System.out.println(e.getMessage());
         }
 		finally
         {
-           if (fos != null)
-           {
+//           if (fos != null)
+//           {
         	   try 
-        	   	{
-        		   fos.close();
-        	   	} 
+				{
+				   fos.close();
+				} 
         	   catch (IOException e) 
-        	   {
-        		   System.out.println("Something went wrong :(");
-        	   }
-           }
+        	   	{
+        		   System.out.println("IOException");
+        		   System.out.println("IOException while closing");
+        		   System.out.println(e.getMessage());
+        	   	}
+//           }
         }
 	}
 }
