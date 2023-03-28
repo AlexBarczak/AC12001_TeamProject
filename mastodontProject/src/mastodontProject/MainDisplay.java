@@ -200,7 +200,7 @@ public class MainDisplay extends JPanel{
 		repaint();
 	}
 	
-	public void displayFollowedUserPage() {
+	public void displayFollowedUserPage(User user) {
 		removeAll();
 		
 		validate();
@@ -218,13 +218,15 @@ public class MainDisplay extends JPanel{
 		repaint();
 	}
 	
-	public void displayCurrentUserPage(User user) {
+	public void displayCurrentUserPage() {
 		removeAll();
 		
 		// create area for posts and area for writing a new post
 		// in the area for posts create a JPanel and populate the area
 		// with all the posts
 		// for the area to create a post add a text area for the user and a button to post
+		
+		
 		
 		validate();
 		repaint();

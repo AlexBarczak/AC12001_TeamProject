@@ -81,7 +81,7 @@ public class Mastodont extends JFrame{
 	public void logIn(User user) {
 		this.currentUser = user;
 		header.displayUserAppearance(user);
-		main.displayCurrentUserPage(user);
+		main.displayCurrentUserPage();
 		sidebar.displayFollowed(user);
 	}
 	
