@@ -2,13 +2,16 @@ package mastodontProject;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.*;
 
-public class MainDisplay extends JPanel{
+public class MainDisplay extends JPanel implements ActionListener{
 	
 	public Mastodont program;
 	
@@ -244,6 +247,16 @@ public class MainDisplay extends JPanel{
 		gbc.ipadx = 10;
 		detailsPanel.add(new JLabel(user.getUsername() + "'s account:"), gbc);
 		
+		JButton befriendButton = new JButton("add " + user.getUsername());
+		
+		befriendButton.addActionListener(e -> {
+			program.getGraph().addEdge(user, program.getCurrentUser());
+			program.sidebar.displayFollowed(program.getCurrentUser());
+		});
+		
+		gbc.gridx = 1;
+		detailsPanel.add(befriendButton,gbc);
+		
 		gbc.gridy = 1;
 		gbc.gridx = 0;
 		JLabel hometownLabel = new JLabel("Hometown: " + user.getHometown());
@@ -253,6 +266,15 @@ public class MainDisplay extends JPanel{
 		gbc.gridx = 0;
 		JLabel workplaceLabel = new  JLabel("Workplace: " + user.getWorkplace());
 		detailsPanel.add(workplaceLabel, gbc);
+		
+		gbc.gridy = 3;
+		gbc.gridx = 0;
+		JButton viewFollowedButton = new JButton("view friends");
+		
+		viewFollowedButton.addActionListener(e -> {
+			displayListOfFriends(user);
+		});
+		detailsPanel.add(viewFollowedButton, gbc);
 		
 		//display the users posts alongside a textarea for making a new post
 		
@@ -288,6 +310,166 @@ public class MainDisplay extends JPanel{
 		JPanel searchPanel = new UserSearchArea(program);
 		
 		add(searchPanel);
+		
+		validate();
+		repaint();
+	}
+	
+	
+	//uncertain about passing in arguments through a performed action so creating fields will have to do
+	JPanel listPanel;
+	User userToShow;
+	
+	public void displayListOfFriends(User user) {
+		removeAll();
+		
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		userToShow = user;
+		
+		JPanel optionsPanel = new JPanel();
+		listPanel = new JPanel();
+		
+		add(optionsPanel);
+		
+		JScrollPane scrollPane = new JScrollPane(listPanel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		add(scrollPane);
+		
+		optionsPanel.add(new JLabel("showing friends of " + user.getUsername()));
+		
+		//Create the radio buttons
+		JRadioButton allFriends = new JRadioButton("view all friends");
+		allFriends.setActionCommand("all");
+		allFriends.setSelected(true);
+		optionsPanel.add(allFriends);
+		
+		JRadioButton mutuallyInclusiveFriends = new JRadioButton("view mutually inclusive friends");
+		mutuallyInclusiveFriends.setActionCommand("mIn");
+		optionsPanel.add(mutuallyInclusiveFriends);
+		
+		JRadioButton mutuallyExclusiveFriends = new JRadioButton("view mutually exclusive friends");
+		mutuallyExclusiveFriends.setActionCommand("mEx");
+		optionsPanel.add(mutuallyExclusiveFriends);
+		
+		JRadioButton sameHometownFriends = new JRadioButton("view friends with same hometown");
+		sameHometownFriends.setActionCommand("home");
+		optionsPanel.add(sameHometownFriends);
+		
+		JRadioButton sameWorkplaceFriends = new JRadioButton("view friends with same workplace");
+		sameWorkplaceFriends.setActionCommand("work");
+		optionsPanel.add(sameWorkplaceFriends);
+		
+		//Group the radio buttons
+		ButtonGroup group = new ButtonGroup();
+	    group.add(allFriends);
+	    group.add(mutuallyInclusiveFriends);
+	    group.add(mutuallyExclusiveFriends);
+	    group.add(sameHometownFriends);
+	    group.add(sameWorkplaceFriends);
+		
+	    //Register a listener for the radio buttons
+	    allFriends.addActionListener(this);
+	    mutuallyInclusiveFriends.addActionListener(this);
+	    mutuallyExclusiveFriends.addActionListener(this);
+	    sameHometownFriends.addActionListener(this);
+	    sameWorkplaceFriends.addActionListener(this);
+	    
+	    actionPerformed(new ActionEvent(new JLabel(), 1, "all"));
+	    
+		validate();
+		repaint();
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		listPanel.removeAll();
+	
+		String action = e.getActionCommand();
+		
+		if(action.equals("all")) {
+			HashSet<User> list = program.getGraph().getAdjVertices(userToShow);
+			Iterator<User> it = list.iterator();
+			
+			while(it.hasNext()) {
+				User nextUser = it.next();
+				
+				JButton nextUserButton = new JButton(nextUser.getUsername());
+				listPanel.add(nextUserButton);
+				
+				nextUserButton.addActionListener(f -> {
+					program.main.displayFollowedUserPage(nextUser);
+				});
+			}
+		}else if(action.equals("mIn")) {
+			HashSet<User> list = program.getGraph().getMutuals(userToShow, program.getCurrentUser());
+			Iterator<User> it = list.iterator();
+			
+			while(it.hasNext()) {
+				User nextUser = it.next();
+				
+				JButton nextUserButton = new JButton(nextUser.getUsername());
+				listPanel.add(nextUserButton);
+				
+				nextUserButton.addActionListener(f -> {
+					program.main.displayFollowedUserPage(nextUser);
+				});
+			}
+		}else if(action.equals("mEx")) {
+			HashSet<User> list = program.getGraph().getUniques(userToShow, program.getCurrentUser());
+			Iterator<User> it = list.iterator();
+			
+			while(it.hasNext()) {
+				User nextUser = it.next();
+				
+				JButton nextUserButton = new JButton(nextUser.getUsername());
+				listPanel.add(nextUserButton);
+				
+				nextUserButton.addActionListener(f -> {
+					program.main.displayFollowedUserPage(nextUser);
+				});
+			}
+		}else if(action.equals("home")) {
+			HashSet<User> list = program.getGraph().getAdjVertices(userToShow);
+			Iterator<User> it = list.iterator();
+			
+			String hometownOfCurrentUser = program.getCurrentUser().getHometown();
+			
+			while(it.hasNext()) {
+				User nextUser = it.next();
+				
+				if(!nextUser.getHometown().equals(hometownOfCurrentUser)) {
+					continue;
+				}
+				
+				JButton nextUserButton = new JButton(nextUser.getUsername());
+				listPanel.add(nextUserButton);
+				
+				nextUserButton.addActionListener(f -> {
+					program.main.displayFollowedUserPage(nextUser);
+				});
+			}
+		}else if(action.equals("work")) {
+			HashSet<User> list = program.getGraph().getAdjVertices(userToShow);
+			Iterator<User> it = list.iterator();
+			
+			String workplaceOfCurrentUser = program.getCurrentUser().getWorkplace();
+			
+			while(it.hasNext()) {
+				User nextUser = it.next();
+				
+				if(!nextUser.getWorkplace().equals(workplaceOfCurrentUser)) {
+					continue;
+				}
+				
+				JButton nextUserButton = new JButton(nextUser.getUsername());
+				listPanel.add(nextUserButton);
+				
+				nextUserButton.addActionListener(f -> {
+					program.main.displayFollowedUserPage(nextUser);
+				});
+			}
+		}
 		
 		validate();
 		repaint();

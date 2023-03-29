@@ -55,22 +55,13 @@ public class UserSearchArea extends JPanel{
 			User searchResult = program.searchForUser(userSearchField.getText());	
 			
 			if (searchResult == null) {
+				gbc.gridy = 3;
+				add(new JLabel("no such user found"), gbc);
+				program.validateAndRepaint();
 				return;
 			}
 			
-			JButton userResult = new JButton(searchResult.getUsername());
-			
-			
-			
-			userResult.addActionListener(f -> {
-				program.getGraph().addEdge(searchResult, program.getCurrentUser());
-				program.sidebar.displayFollowed(program.getCurrentUser());
-			});
-			
-			resultPanel.add(userResult);
-			add(resultPanel, gbc);
-			
-			program.validateAndRepaint();			
+			program.main.displayFollowedUserPage(searchResult);						
 		});
 		
 		
