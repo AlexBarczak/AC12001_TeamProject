@@ -59,9 +59,7 @@ public class HeaderDisplay extends JPanel{
 	
 	/**
 	 * changes the appearance of the header to be more suited to the user who is logged in
-	 * adds the username of the user in the top right corner and creates a profile image 
-	 * serving as a button to return to the logged in user's profile, though it was really just
-	 * a proof of concept for displaying images and having it serve a purpose
+	 * adds the username of the user in the top right corner
 	 * 
 	 * @param user who is currently logged in
 	 */
@@ -73,18 +71,9 @@ public class HeaderDisplay extends JPanel{
 		add(Box.createHorizontalGlue());
 		add(new JLabel(user.getUsername()));
 
-		add(Box.createRigidArea(new Dimension(5,0)));
+		add(Box.createRigidArea(new Dimension(5,0)));		
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("../neia.jpg"), "is this missing?");
-		Image image = icon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(64, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		icon = new ImageIcon(newimg);  // transform it back
-		
-		
-		JButton iconButton = new JButton(icon);
-		iconButton.setBorder(null);
-		iconButton.setBorderPainted(false);
-		iconButton.setMargin(new Insets(0,0,0,0));
+		JButton iconButton = new JButton("return to home page");
 		
 		iconButton.addActionListener(e -> {
 			program.main.displayCurrentUserPage();
