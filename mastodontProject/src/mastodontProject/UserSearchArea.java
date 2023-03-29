@@ -5,8 +5,8 @@ import javax.swing.*;
  * 
  * Class to handle the search and add friend functionality
  * 
- * 
- * @author alexb + Flynn Henderson
+ * @author Flynn Henderson
+ * @author Aleksander Barczak
  *
  */
 public class UserSearchArea extends JPanel{
@@ -21,10 +21,10 @@ public class UserSearchArea extends JPanel{
 		this.program = program;
 		display();
 	}
+	
 	/**
 	 * Display method to display searched for user, with the option to add them
 	 */
-	
 	public void display() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

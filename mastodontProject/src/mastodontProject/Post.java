@@ -7,6 +7,9 @@ import java.awt.*;
 /**
  * A post class in which you can pretty much just call an instance of it and call the createPost() method to return a 
  * panel which can then be added straight to the frame or other component.
+ * 
+ * @author Lucy Thomson
+ * @author Emma Marting
  */
 public class Post implements Serializable{
     private String username;
