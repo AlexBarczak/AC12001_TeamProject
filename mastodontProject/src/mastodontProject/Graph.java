@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Class to hold graph data structure with Users as vertices
  * 
- * @author Group 1
+ * @author Martyn Bett
  * Version 1
  */
 

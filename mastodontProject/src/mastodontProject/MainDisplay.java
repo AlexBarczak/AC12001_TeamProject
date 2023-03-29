@@ -11,8 +11,19 @@ import java.util.LinkedList;
 
 import javax.swing.*;
 
+/**
+ * 
+ * class to display everything within the main panel of the GUI for the user
+ *  
+ * @author Aleksander Barczak
+ *
+ */
 public class MainDisplay extends JPanel implements ActionListener{
 	
+	/**
+	 * a reference to the Mastodont instance running the program and containing the 
+	 * all the main GUI panels
+	 */
 	public Mastodont program;
 	
 	//main display area will have the following functions:
@@ -24,6 +35,12 @@ public class MainDisplay extends JPanel implements ActionListener{
 	//5. display a search area to find a user
 	//6. display a page to add a new post to your account
 	
+	/**
+	 * initialising function for the program setting a default layout and also
+	 * defining the reference to the main program
+	 * 
+	 * @param program reference to Mastodont instance contianing all panels
+	 */
 	public MainDisplay(Mastodont program) {
 		setLayout(new GridBagLayout());
 		
@@ -32,10 +49,16 @@ public class MainDisplay extends JPanel implements ActionListener{
 		displayGuestPage();		
 	}
 
+	/**
+	 * alternate initialiser function which only sets the layout manager for the panel
+	 */
 	public MainDisplay() {
 		setLayout(new GridBagLayout());
 	}
 	
+	/**
+	 * displays the first screen seen by the user where they choose to either log in or create an account
+	 */
 	public void displayGuestPage() {
 		removeAll();
 		
@@ -67,6 +90,9 @@ public class MainDisplay extends JPanel implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * displays the log in page for the user
+	 */
 	public void displayLoginPage() {
 		removeAll();
 		
@@ -122,7 +148,14 @@ public class MainDisplay extends JPanel implements ActionListener{
 		validate();
 		repaint();
 	}
-	
+
+	/**
+	 * function to attempt to sign in as a user after filling the username 
+	 * and password text fields in the display
+	 * 
+	 * @param username username of the user signing in
+	 * @param password password of the user signing in
+	 */
 	public void attemptSignIn(String username, char[] password) {
 		User user =  program.searchForUser(username);
 		
@@ -141,6 +174,13 @@ public class MainDisplay extends JPanel implements ActionListener{
 		program.logIn(user);
 	}
 	
+	/**
+	 * displays a text field for a new username and a text field for a password
+	 * and two buttons to either create an account with the corresponding username and 
+	 * password or try to sign in
+	 * 
+	 * note that a username must be unused to create a new account with it
+	 */
 	public void displaySignUpPage() {
 		removeAll();
 		
@@ -213,6 +253,11 @@ public class MainDisplay extends JPanel implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * displays the page a user passed in as argument
+	 * 
+	 * @param user user whose account is to be displayed
+	 */
 	public void displayFollowedUserPage(User user) {
 		removeAll();
 		
@@ -302,6 +347,11 @@ public class MainDisplay extends JPanel implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * displays a page to search for users by username
+	 * and takes you to their account or notifies you 
+	 * if no such user exists
+	 */
 	public void displaySearchPage() {
 		removeAll();		
 		
@@ -320,6 +370,13 @@ public class MainDisplay extends JPanel implements ActionListener{
 	JPanel listPanel;
 	User userToShow;
 	
+	/**
+	 * function used to display a list of all the friends of a particular user and allow
+	 * you to apply variuos filters on that list such as only showing mutual or unique friends
+	 * or only showing friends on the list who have the same hometown or workplace as the logged in user
+	 * 
+	 * @param user user whose friends are to be listed
+	 */
 	public void displayListOfFriends(User user) {
 		removeAll();
 		
@@ -333,7 +390,6 @@ public class MainDisplay extends JPanel implements ActionListener{
 		add(optionsPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(listPanel);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		add(scrollPane);
 		
@@ -382,6 +438,10 @@ public class MainDisplay extends JPanel implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * function filtering the friends list desplayed by displayListOfFriends function
+	 * based on the radio buttons pressed
+	 */
 	public void actionPerformed(ActionEvent e) {
 		listPanel.removeAll();
 	
@@ -474,7 +534,13 @@ public class MainDisplay extends JPanel implements ActionListener{
 		validate();
 		repaint();
 	}
-	
+
+	/**
+	 * displays the home page of the currently signed in user with 
+	 * basic information and means of altering the hometown and workplace displayed,
+	 * all the posts the user has posted with their likes and content
+	 * and an area for creating and posting a new post
+	 */
 	public void displayCurrentUserPage() {
 		removeAll();
 		

@@ -6,10 +6,33 @@ import java.awt.Insets;
 
 import javax.swing.*;
 
+/**
+ * class for the displaying of the header of the mastodont applet
+ * 
+ * display the name of the app, the username of the currently logged in user
+ * and a profile image though currently set to an unchangeable image as it's 
+ * more just a proof of concept and we lack a logo
+ * 
+ * the profile image does however act as a button to head back to the main page of the
+ * logged in user
+ * 
+ * @author Aleksander Barczak
+ *
+ */
 public class HeaderDisplay extends JPanel{
 	
+	/**
+	 * a reference back to the main program to be able to interact with other 
+	 * panels in the GUI
+	 */
 	private Mastodont program;
 	
+	/**
+	 * initialising function for the header display giving it a default layout manager and appearance
+	 * along with a border and setting the main program reference
+	 * 
+	 * @param program reference to the mastodont program containing all the panels
+	 */
 	public HeaderDisplay(Mastodont program) {
 		this.program = program;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -18,6 +41,11 @@ public class HeaderDisplay extends JPanel{
 		displayGuestAppearance();
 	}
 	
+	/**
+	 * 
+	 * display the default appearance of the header when a user first opens the program
+	 * 
+	 */
 	public void displayGuestAppearance() {
 		removeAll();
 		
@@ -29,6 +57,12 @@ public class HeaderDisplay extends JPanel{
 		repaint();
 	}
 	
+	/**
+	 * changes the appearance of the header to be more suited to the user who is logged in
+	 * adds the username of the user in the top right corner
+	 * 
+	 * @param user who is currently logged in
+	 */
 	public void displayUserAppearance(User user){
 		removeAll();
 		
@@ -37,18 +71,9 @@ public class HeaderDisplay extends JPanel{
 		add(Box.createHorizontalGlue());
 		add(new JLabel(user.getUsername()));
 
-		add(Box.createRigidArea(new Dimension(5,0)));
+		add(Box.createRigidArea(new Dimension(5,0)));		
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("../neia.jpg"), "is this missing?");
-		Image image = icon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(64, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		icon = new ImageIcon(newimg);  // transform it back
-		
-		
-		JButton iconButton = new JButton(icon);
-		iconButton.setBorder(null);
-		iconButton.setBorderPainted(false);
-		iconButton.setMargin(new Insets(0,0,0,0));
+		JButton iconButton = new JButton("return to home page");
 		
 		iconButton.addActionListener(e -> {
 			program.main.displayCurrentUserPage();
